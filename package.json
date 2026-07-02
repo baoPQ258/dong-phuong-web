@@ -1,0 +1,39 @@
+{
+  "name": "dong-phuong-web",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint"
+  },
+  "dependencies": {
+    "@radix-ui/react-dialog": "^1.1.1",
+    "@radix-ui/react-navigation-menu": "^1.2.0",
+    "@strapi/blocks-react-renderer": "^1.0.2",
+    "@tailwindcss/typography": "^0.5.20",
+    "axios": "^1.7.2",
+    "clsx": "^2.1.1",
+    "lucide-react": "^0.400.0",
+    "next": "14.2.5",
+    "qs": "^6.13.0",
+    "react": "^18",
+    "react-dom": "^18",
+    "react-hot-toast": "^2.4.1",
+    "tailwind-merge": "^2.4.0"
+  },
+  "devDependencies": {
+    "@types/node": "26.0.1",
+    "@types/qs": "^6.15.1",
+    "@types/react": "19.2.17",
+    "@types/react-dom": "^19.0.0",
+    "autoprefixer": "^10.4.19",
+    "eslint": "^8",
+    "eslint-config-next": "14.2.5",
+    "postcss": "^8",
+    "tailwindcss": "^3.4.1",
+    "typescript": "6.0.3"
+  }
+}
