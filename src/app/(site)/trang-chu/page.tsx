@@ -137,7 +137,7 @@ async function FeaturesSection() {
           }
           description={dsLichThi?.[0]?.tom_tat}
           badge="Lịch thi"
-          href={`http://localhost:3000/tin-tuc/${dsLichThi?.[0]?.documentId}`}
+          href={`/tin-tuc/${dsLichThi?.[0]?.documentId}`}
         ></FeaturedCard>
         <FeaturedCard
           image="/images/photo-1517694712202-14dd9538aa97.jpg"
