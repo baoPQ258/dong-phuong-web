@@ -47,15 +47,32 @@ export interface KhoaHoc {
   createdAt: string;
 }
 
+export interface StrapiFile {
+  id: number;
+  documentId: string;
+  name: string;
+  alternativeText: string | null;
+  caption: string | null;
+  url: string;
+  ext: string;
+  mime: string;
+  size: number;
+  createdAt: string;
+  updatedAt: string;
+  publishedAt: string;
+}
+
 export interface TinTuc {
   tieu_de: string;
   noi_dung: any[];
   tom_tat: string;
   hinh_anh: StrapiImage;
+  File?: StrapiFile[];
   slug: string;
   createdAt: string;
   publishedAt: string;
   documentId: string;
+  category?: string;
 }
 
 export interface ThongTinTrungTam {

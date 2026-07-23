@@ -85,7 +85,7 @@ export default async function TinTucDetailPage({ params }: PageProps) {
   try {
     // Lấy bài viết theo slug
     const res = await fetchStrapi<{ data: TinTuc }>(`tin-tucs/${params.slug}`, {
-      populate: ["hinh_anh"],
+      populate: ["hinh_anh", "File"],
     });
     if (!res.data) notFound();
     baiViet = res.data;
@@ -168,6 +168,18 @@ export default async function TinTucDetailPage({ params }: PageProps) {
                 />
               )}
             </div>
+            {baiViet.File?.[0]?.url && (
+              <div className="my-4">
+                <a
+                  href={`https://dong-phuong-cms-production.up.railway.app${baiViet.File[0].url}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-blue-600 underline font-medium"
+                >
+                  📄 Văn bản đính kèm: {baiViet.File[0].name}
+                </a>
+              </div>
+            )}
 
             {/* Nút quay lại */}
             <div className="mt-10 pt-6 border-t border-gray-200">
@@ -183,7 +195,6 @@ export default async function TinTucDetailPage({ params }: PageProps) {
           {/* ===== SIDEBAR ===== */}
           <div className="flex flex-col gap-6 w-full lg:w-72 shrink-0">
             <Sidebar />
-
             {/* Bài viết liên quan */}
             {dsBaiKhac.length > 0 && (
               <div className="bg-white rounded-xl border border-gray-200 overflow-hidden">
@@ -193,35 +204,30 @@ export default async function TinTucDetailPage({ params }: PageProps) {
                   </h3>
                 </div>
                 <ul className="divide-y divide-gray-100 line-clamp-1">
-                  {dsBaiKhac.map(
-                    (item: any) => (
-                      console.log("item", item.tieu_de),
-                      (
-                        <li key={item.id} className="line-clamp-1">
-                          <Link
-                            href={`/tin-tuc/${item.documentId}`}
-                            className="flex gap-3 p-3 hover:bg-gray-50 transition-colors group"
-                          >
-                            {item?.hinh_anh?.data && (
-                              <div className="relative w-16 h-12 rounded-lg overflow-hidden shrink-0 ">
-                                <Image
-                                  src={getStrapiMedia(
-                                    item?.hinh_anh.data.attributes.url,
-                                  )}
-                                  alt={item?.tieu_de}
-                                  fill
-                                  className="object-cover"
-                                />
-                              </div>
-                            )}
-                            <p className="text-sm text-gray-600 group-hover:text-sky-600 line-clamp-2 leading-snug transition-colors">
-                              {item?.tieu_de}
-                            </p>
-                          </Link>
-                        </li>
-                      )
-                    ),
-                  )}
+                  {dsBaiKhac.map((item: any) => (
+                    <li key={item.id} className="line-clamp-1">
+                      <Link
+                        href={`/tin-tuc/${item.documentId}`}
+                        className="flex gap-3 p-3 hover:bg-gray-50 transition-colors group"
+                      >
+                        {item?.hinh_anh?.data && (
+                          <div className="relative w-16 h-12 rounded-lg overflow-hidden shrink-0 ">
+                            <Image
+                              src={getStrapiMedia(
+                                item?.hinh_anh.data.attributes.url,
+                              )}
+                              alt={item?.tieu_de}
+                              fill
+                              className="object-cover"
+                            />
+                          </div>
+                        )}
+                        <p className="text-sm text-gray-600 group-hover:text-sky-600 line-clamp-2 leading-snug transition-colors">
+                          {item?.tieu_de}
+                        </p>
+                      </Link>
+                    </li>
+                  ))}
                 </ul>
               </div>
             )}

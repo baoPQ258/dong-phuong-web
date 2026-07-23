@@ -29,7 +29,7 @@ export default function Navbar() {
             className="flex items-center gap-1 hover:text-teal-400 transition-colors"
           >
             <Phone size={14} />
-            <span>0236.xxx.xxxx</span>
+            <span>0349769975</span>
           </a>
         </div>
       </div>

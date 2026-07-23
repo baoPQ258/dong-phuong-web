@@ -1,8 +1,6 @@
 import Link from "next/link";
 import { BookOpen, Award, Users, Clock } from "lucide-react";
 import { FeaturedCard } from "@/components/ui/card";
-import Image from "next/image";
-import logo1 from "../../../../public/images/photo-1517694712202-14dd9538aa97.jpg";
 import { fetchStrapi, getStrapiMedia } from "@/lib/strapi";
 import { StrapiResponse, TinTuc } from "@/types";
 // --- Hero Section ---
@@ -109,6 +107,17 @@ async function FeaturesSection() {
   } catch (e) {
     console.log("Lỗi:", e);
   }
+  let dsKetQua: TinTuc[] = [];
+  try {
+    const resKetQua = await fetchStrapi<StrapiResponse<TinTuc>>(
+      "tin-tucs?filters[danh_muc][$eq]=ket-qua&populate=*",
+      {},
+    );
+    // Map ra bỏ wrapper StrapiData
+    dsKetQua = resKetQua.data.map((item: any) => item.attributes ?? item);
+  } catch (e) {
+    console.log("Lỗi:", e);
+  }
   return (
     <section className="py-20 bg-gray-50">
       <div className="container-main">
@@ -142,10 +151,13 @@ async function FeaturesSection() {
         <FeaturedCard
           image="/images/photo-1517694712202-14dd9538aa97.jpg"
           imageAlt="logo1"
-          title="Chứng chỉ Tin học A – Cơ hội mở ra tương lai"
-          description="Chứng chỉ được công nhận toàn quốc, là điều kiện bắt buộc trong nhiều hồ sơ tuyển dụng."
-          badge="Khóa học hot"
-          href="http://localhost:3000/tin-tuc/slug"
+          title={
+            dsKetQua?.at(-1)?.tieu_de ||
+            "Chứng chỉ Tin học A – Cơ hội mở ra tương lai"
+          }
+          description={dsKetQua?.at(-1)?.tom_tat}
+          badge="Kết quả thi"
+          href={`/tin-tuc/${dsKetQua?.at(-1)?.documentId}`}
         ></FeaturedCard>
         <FeaturedCard
           image="/images/photo-1517694712202-14dd9538aa97.jpg"
