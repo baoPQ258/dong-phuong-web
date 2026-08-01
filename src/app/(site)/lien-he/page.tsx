@@ -17,12 +17,22 @@ export default function LienHePage() {
     e.preventDefault();
     setLoading(true);
     try {
-      // Gửi lên Strapi
-      await fetch(`${process.env.NEXT_PUBLIC_STRAPI_URL}/api/lien-hes`, {
+      const res = await fetch("https://api.web3forms.com/submit", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ data: form }),
+        body: JSON.stringify({
+          access_key: "a31a6145-46cd-4267-9425-fa2631afb393",
+          subject: `Tin nhắn liên hệ mới từ ${form.ho_ten}`,
+          "Họ tên": form.ho_ten,
+          "Điện thoại": form.dien_thoai,
+          Email: form.email,
+          "Nội dung": form.noi_dung,
+        }),
       });
+
+      const data = await res.json();
+      if (!data.success) throw new Error("Gửi thất bại");
+
       toast.success("Gửi thành công! Chúng tôi sẽ liên hệ lại sớm.");
       setForm({ ho_ten: "", dien_thoai: "", email: "", noi_dung: "" });
     } catch {
@@ -54,7 +64,7 @@ export default function LienHePage() {
                 { icon: Phone, label: "Điện thoại", value: "0349769975" },
                 { icon: Mail, label: "Email", value: "cpd.ued.vn" },
                 {
-                  icon: Clock,  
+                  icon: Clock,
                   label: "Giờ làm việc",
                   value: "Thứ 2 – Thứ 7: 7:30 – 17:00",
                 },

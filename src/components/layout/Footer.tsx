@@ -14,8 +14,10 @@ export default function Footer() {
           </p>
           <div className="flex gap-3">
             <a
-              href="#"
-              className="bg-primary-600 hover:bg-teal-500 w-9 h-9 rounded-full flex items-center justify-center transition-colors"
+              href="https://www.facebook.com/trungtamdongphuong?locale=vi_VN"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="bg-primary-600 hover:bg-teal-500 w-9 h-9 rounded-full flex items-center justify-center"
               aria-label="Facebook"
             >
               <span className="font-bold text-sm">f</span>

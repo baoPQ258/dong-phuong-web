@@ -4,46 +4,12 @@ import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { Calendar, ChevronRight, Home } from "lucide-react";
-
+import Sidebar from "../../../../components/ui/Sidebar";
 // =====================
 // SIDEBAR DANH MỤC
 // =====================
-const danhMuc = [
-  { label: "Thông báo", href: "/tin-tuc?danh-muc=thong-bao" },
-  { label: "Tuyển sinh", href: "/tin-tuc?danh-muc=tuyen-sinh" },
-  { label: "Lịch thi", href: "/tin-tuc?danh-muc=lich-thi" },
-  { label: "Danh sách thi", href: "/tin-tuc?danh-muc=danh-sach-thi" },
-  { label: "Điểm thi", href: "/tin-tuc?danh-muc=diem-thi" },
-];
-
-function Sidebar() {
-  return (
-    <aside className="w-full lg:w-72 shrink-0">
-      <div className="bg-white rounded-xl border border-gray-200 overflow-hidden">
-        <div className="bg-gray-100 px-4 py-3 border-b border-gray-200">
-          <h3 className="font-bold text-gray-700 text-sm uppercase tracking-wider">
-            Danh mục
-          </h3>
-        </div>
-        <ul>
-          {danhMuc.map((item, i) => (
-            <li
-              key={i}
-              className="border-b border-gray-100 last:border-0 hover:bg-sky-500 hover:text-white"
-            >
-              <Link
-                href={item.href}
-                className="flex items-center justify-between px-4 py-3 text-sm font-medium transition-colors"
-              >
-                {item.label}
-                <ChevronRight size={16} className="text-black" />
-              </Link>
-            </li>
-          ))}
-        </ul>
-      </div>
-    </aside>
-  );
+interface PageProps {
+  searchParams: Promise<{ "danh-muc"?: string }>;
 }
 
 // =====================
@@ -135,7 +101,7 @@ export default async function TinTucDetailPage({ params }: PageProps) {
 
             {/* Ngày đăng */}
             <div className="flex items-center gap-2 text-gray-400 text-sm mb-6 pb-4 border-b border-gray-200">
-              <Calendar size={14} />
+              {/* <Calendar size={14} />
               <span>
                 Ngày đăng:{" "}
                 {baiViet?.createdAt &&
@@ -144,7 +110,7 @@ export default async function TinTucDetailPage({ params }: PageProps) {
                     month: "2-digit",
                     year: "numeric",
                   })}
-              </span>
+              </span> */}
             </div>
 
             {/* Ảnh thumbnail (nếu có) */}
@@ -168,7 +134,7 @@ export default async function TinTucDetailPage({ params }: PageProps) {
                 />
               )}
             </div>
-            {baiViet.File?.[0]?.url && (
+            {baiViet?.File?.[0]?.url && (
               <div className="my-4">
                 <a
                   href={`https://dong-phuong-cms-production.up.railway.app${baiViet.File[0].url}`}

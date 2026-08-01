@@ -96,7 +96,6 @@ async function FeaturesSection() {
     },
   ];
   let dsLichThi: TinTuc[] = [];
-
   try {
     const resLichThi = await fetchStrapi<StrapiResponse<TinTuc>>(
       "tin-tucs?filters[danh_muc][$eq]=lich-thi&populate=*",
@@ -118,6 +117,18 @@ async function FeaturesSection() {
   } catch (e) {
     console.log("Lỗi:", e);
   }
+  let taiLieu: TinTuc[] = [];
+  try {
+    const resKetQua = await fetchStrapi<StrapiResponse<TinTuc>>(
+      "tin-tucs?filters[danh_muc][$eq]=tai-lieu&populate=*",
+      {},
+    );
+    // Map ra bỏ wrapper StrapiData
+    taiLieu = resKetQua.data.map((item: any) => item.attributes ?? item);
+  } catch (e) {
+    console.log("Lỗi:", e);
+  }
+  console.log("taiLieu", taiLieu);
   return (
     <section className="py-20 bg-gray-50">
       <div className="container-main">
@@ -141,12 +152,12 @@ async function FeaturesSection() {
           image="/images/photo-1517694712202-14dd9538aa97.jpg"
           imageAlt="logo1"
           title={
-            dsLichThi?.[0]?.tieu_de ||
+            dsLichThi?.[dsLichThi.length - 1]?.tieu_de ||
             "Chứng chỉ Tin học A – Cơ hội mở ra tương lai"
           }
-          description={dsLichThi?.[0]?.tom_tat}
+          description={dsLichThi?.[dsLichThi.length - 1]?.tom_tat}
           badge="Lịch thi"
-          href={`/tin-tuc/${dsLichThi?.[0]?.documentId}`}
+          href={`/tin-tuc/${dsLichThi?.[dsLichThi.length - 1]?.documentId}`}
         ></FeaturedCard>
         <FeaturedCard
           image="/images/photo-1517694712202-14dd9538aa97.jpg"
@@ -162,10 +173,10 @@ async function FeaturesSection() {
         <FeaturedCard
           image="/images/photo-1517694712202-14dd9538aa97.jpg"
           imageAlt="logo1"
-          title="Chứng chỉ Tin học A – Cơ hội mở ra tương lai"
-          description="Chứng chỉ được công nhận toàn quốc, là điều kiện bắt buộc trong nhiều hồ sơ tuyển dụng."
-          badge="Khóa học hot"
-          href="http://localhost:3000/tin-tuc/slug"
+          title="Bộ đề câu hỏi trắc nghiệm"
+          description="Tài liệu dùng để ôn tập cho phần thi trắc nghiệm chứng chỉ Tin học cơ bản. Bao gồm các câu hỏi trắc nghiệm và đáp án chi tiết."
+          badge="Tài liệu"
+          href={`/tin-tuc/${taiLieu?.at(-1)?.documentId}`}
         ></FeaturedCard>
       </div>
     </section>
